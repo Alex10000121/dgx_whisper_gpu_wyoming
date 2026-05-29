@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  whisper_gpu:
+    build: .
+    container_name: wyoming_whisper_gpu
+    restart: unless-stopped
+    runtime: nvidia
+    ipc: host
+    environment:
+      - TZ=Europe/Zurich
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - WHISPER_MODEL=large-v3        # tiny, base, small, medium, large-v1, large-v2, large-v3
+      - WHISPER_LANG=de
+      - WHISPER_BEAM_SIZE=5
+    volumes:
+      - /opt/docker/whisper_gpu/data:/data   # Modelle werden hier gecacht
+    tmpfs:
+      - /tmp:size=256m,mode=1777
+    ports:
+      - "10300:10300"
+    networks:
+      - ai_network
+
+networks:
+  ai_network:
+    external: true
