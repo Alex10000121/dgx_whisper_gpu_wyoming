@@ -14,14 +14,15 @@ services:
       - WHISPER_LANG=de
       - WHISPER_BEAM_SIZE=5
     volumes:
-      - /opt/docker/whisper_gpu/data:/data   # Modelle werden hier gecacht
+      - /opt/docker/dgx_whisper_gpu_wyoming/data:/data   # Modelle werden hier gecacht
     tmpfs:
       - /tmp:size=256m,mode=1777
     ports:
       - "10300:10300"
     networks:
       - ai_network
-
+ 
 networks:
   ai_network:
     external: true
+ 
